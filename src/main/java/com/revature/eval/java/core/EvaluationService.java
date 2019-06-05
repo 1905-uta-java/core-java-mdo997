@@ -1,8 +1,16 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -10,12 +18,17 @@ public class EvaluationService {
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
 	 * reverses a String. Example: reverse("example"); -> "elpmaxe"
 	 * 
-	 * @param string
-	 * @return
+	 * @param string - String that will be reversed.
+	 * @return newString - a String that is the reverse of the @param string.
+	 * @throws - Nothing.
 	 */
 	public String reverse(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String newString = "";
+		for(int x = string.length()-1; x >= 0; x--) {
+			newString += string.charAt(x);
+		}
+			
+		return newString;
 	}
 
 	/**
@@ -23,12 +36,18 @@ public class EvaluationService {
 	 * Acronyms)! Help generate some jargon by writing a program that converts a
 	 * long name like Portable Network Graphics to its acronym (PNG).
 	 * 
-	 * @param phrase
-	 * @return
+	 * @param phrase - String that needs to be turned into an acronym
+	 * @return acronym - a String that represents the acronym of @param phrase.
+	 * @throws - Nothing.
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String acronym = "";
+		phrase = phrase.replace("-", " ").toUpperCase();
+		String[] str = phrase.trim().split(" ");
+		for(String s: str) {
+			acronym += s.charAt(0);
+		}
+		return acronym;
 	}
 
 	/**
@@ -40,59 +59,128 @@ public class EvaluationService {
 	 * different lengths.
 	 *
 	 */
-	static class Triangle {
+	static class Triangle {// class header
 		private double sideOne;
 		private double sideTwo;
 		private double sideThree;
-
+		
+		/**
+		 * Description - No args constructor
+		 * @param - Nothing.
+		 * @throws - Nothing.
+		 */
 		public Triangle() {
 			super();
 		}
-
+		
+		/**
+		 * Description - Constructor that accepts three doubles that represents a side of a triangle
+		 * @param sideOne - a double value for a side of a triangle
+		 * @param sideTwo - a double value for a side of a triangle
+		 * @param sideThree - a double value for a side of a triangle
+		 * @throws - Nothing.
+		 */
 		public Triangle(double sideOne, double sideTwo, double sideThree) {
 			this();
 			this.sideOne = sideOne;
 			this.sideTwo = sideTwo;
 			this.sideThree = sideThree;
 		}
-
+		
+		/**
+		 * Description - gets the value of side one of the triangle object
+		 * @return sideOne - a double representation of side one of the triangle
+		 * @throws - Nothing.
+		 */
 		public double getSideOne() {
 			return sideOne;
 		}
-
+		
+		/**
+		 * Description - Change the length of side one of the triangle
+		 * @param sideOne - a double value that will replace the current value of side one
+		 * @return - Nothing.
+		 * @throws - Nothing.
+		 */
 		public void setSideOne(double sideOne) {
 			this.sideOne = sideOne;
 		}
 
+		/**
+		 * Description - gets the value of side two of the triangle object
+		 * @return sideOne - a double representation of side two of the triangle
+		 * @throws - Nothing.
+		 */
 		public double getSideTwo() {
 			return sideTwo;
 		}
 
+		/**
+		 * Description - Change the length of side two of the triangle
+		 * @param sideOne - a double value that will replace the current value of side two
+		 * @return - Nothing.
+		 * @throws - Nothing.
+		 */
 		public void setSideTwo(double sideTwo) {
 			this.sideTwo = sideTwo;
 		}
 
+		/**
+		 * Description - gets the value of side three of the triangle object
+		 * @return sideOne - a double representation of side three of the triangle
+		 * @throws - Nothing.
+		 */
 		public double getSideThree() {
 			return sideThree;
 		}
 
+		/**
+		 * Description - Change the length of side three of the triangle
+		 * @param sideOne - a double value that will replace the current value of side three
+		 * @return - Nothing.
+		 * @throws - Nothing.
+		 */
 		public void setSideThree(double sideThree) {
 			this.sideThree = sideThree;
 		}
 
+		/**
+		 * Description - Determines if this triangle is an equilateral triangle
+		 * @return - true if the triangle is an equilateral triangle, false otherwise
+		 * @throws - Nothing
+		 */
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if(this.getSideOne() == this.getSideTwo() && this.getSideOne() == this.getSideThree())
+				return true;
 			return false;
 		}
 
+		/**
+		 * Description - Determines if this triangle is an isosceles triangle
+		 * @return - true if the triangle is an isosceles triangle, false otherwise
+		 * @throws - Nothing
+		 */
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			boolean equalToSideOne = false;
+			
+			if(this.getSideOne() == this.getSideTwo() || this.getSideOne() == this.getSideThree())
+				equalToSideOne = true;
+			
+			if(!this.isEquilateral())
+				if(this.getSideTwo() == this.getSideThree() || equalToSideOne)
+					return true;
 			return false;
 		}
 
+		/**
+		 * Description - Determines if this triangle is an scalene triangle
+		 * @return - true if the triangle is an scalene triangle, false otherwise
+		 * @throws - Nothing
+		 */
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			if(this.isEquilateral() || this.isIsosceles())
+				return false;
+			return true;
 		}
 
 	}
@@ -109,12 +197,30 @@ public class EvaluationService {
 	 * 
 	 * 3 + 2*1 + 2*3 + 2 + 1 = 3 + 2 + 6 + 3 = 5 + 9 = 14
 	 * 
-	 * @param string
-	 * @return
+	 * @param string - String representation of the word that needs a scrabble score
+	 * @return - the score of the scrabbled word
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+		
+		for(int x = 0; x < string.length(); x++) {
+			if(string.substring(x, x+1).matches("[A, E, I, O, U, L, N, R, S, T]|[a, e, i, o, u, l, n, r, s, t]"))
+				score += 1;
+			else if(string.substring(x, x+1).matches("[D, G]|[d, g]"))
+				score += 2;
+			else if(string.substring(x, x+1).matches("[B, C, M, P]|[b, c, m, p]"))
+				score += 3;
+			else if(string.substring(x, x+1).matches("[F, H, V, W, Y]|[f, h, v, w, y]"))
+				score += 4;
+			else if(string.substring(x, x+1).matches("[K]|[k]"))
+				score += 5;
+			else if(string.substring(x, x+1).matches("[J, X]|[j, x]"))
+				score += 8;
+			else if(string.substring(x, x+1).matches("[Q, Z]|[q, z]"))
+				score += 10;
+		}
+		
+		return score;
 	}
 
 	/**
@@ -149,8 +255,21 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String cleanNum = "";
+		String[] cleaner = string.trim().split("[+?1]|[-]|[(]|[)]|['.']|[' ']");
+		for(String str: cleaner) {
+			if(str.matches("[^0-9]+"))
+				throw new IllegalArgumentException();
+			cleanNum += str;
+		}
+		
+		if(cleanNum.length() > 10) {
+			throw new IllegalArgumentException();
+		}
+		
+		
+		
+		return cleanNum;
 	}
 
 	/**
@@ -159,12 +278,43 @@ public class EvaluationService {
 	 * For example for the input "olly olly in come free" olly: 2 in: 1 come: 1
 	 * free: 1
 	 * 
-	 * @param string
-	 * @return
+	 * @param string - String that contains a phrase
+	 * @return - Map<String, Integer> where String is the word, and Integer is the number of occurrences
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> tempList = new HashMap<>();; //Object to be returned
+		
+		//counter for how many words exist
+		
+		//ArrayList that holds the counted words
+		ArrayList<String> counted = new ArrayList<>();
+		
+		//ArrayList that holds the words after splitting the phrase
+		ArrayList<String> word = new ArrayList<>();
+		
+		//clean the string to only hold words separated by a whitespace
+		string = string.replaceAll(",", " ");
+		
+		//Split the string into separate words
+		for(String input: string.split("\\s+")) {
+			word.add(input);
+		}
+		
+		while(word.size() > 0) {
+			String str = word.get(0);
+			int counter = 0;
+			for(int y = 0; y < word.size(); y++) {
+				if(str.compareTo(word.get(y)) == 0) {
+					counter++;
+					word.remove(y);
+					if(y != 0)
+						y -= 1;
+				}
+			}//end y loop
+			tempList.put(str, counter);
+		}//end x loop
+		
+		return tempList;
 	}
 
 	/**
@@ -204,10 +354,20 @@ public class EvaluationService {
 	 */
 	static class BinarySearch<T> {
 		private List<T> sortedList;
-
+		
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			
+			Comparator<T> c = (T str1, T str2) -> {
+				return str2.toString().compareTo(str1.toString());
+			};
+			
+			int index = Collections.binarySearch(sortedList, t, c);
+			
+			if(index < 0)
+				return 0;
+			
+			
+			return index;
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -242,7 +402,16 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
+		String str = Integer.toString(input);
+		int total = 0;
+		
+		for(int x = 0; x < str.length(); x++) {
+			total += Math.pow(Integer.parseInt(str.substring(x, x+1)), str.length());
+		}
+		
+		if(total == input)
+			return true;
+		
 		return false;
 	}
 
@@ -260,8 +429,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		for(char a = 'A'; a <= 'Z'; a++) {
+			if(string.indexOf(a) < 0 && (string.indexOf((char) (a + 32)) < 0)) //if char exists in the string. + 32 for lowercase chars
+				return false;
+		}
+		return true;
 	}
 
 	
@@ -297,11 +469,37 @@ public class EvaluationService {
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
+			
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] c = string.toCharArray();
+			String newStr = "";
+			char upperBoundMax = (char) 91; //used to check if char is above 'Z'
+			char upperBoundMin = (char) 65; //used to keep char from going below 'A'
+			char lowerBoundMax = (char) 123; //used to check if char is above 'z'
+			char lowerBoundMin = (char) 97; //used to keep char from going below 'A'
+			
+			for(int x = 0; x < c.length; x++) {
+				if((c[x] + key) >= upperBoundMax && Character.isUpperCase(c[x])) {
+					int diff = ((c[x] + key) - upperBoundMax);
+					c[x] = (char) (upperBoundMin + diff);
+				} else if(Character.isUpperCase(c[x])){
+					c[x] = (char) (c[x] + key);
+				}
+				
+				if((c[x] + key) >= lowerBoundMax && Character.isLowerCase(c[x])) {
+					int diff = ((c[x] + key) - lowerBoundMax);
+					c[x] = (char) (lowerBoundMin + diff);
+				} else if(Character.isLowerCase(c[x])) {
+					c[x] = (char) (c[x] + key);
+				}
+				
+				newStr += c[x];
+			}
+			
+			
+			return newStr;
 		}
 
 	}
@@ -332,7 +530,10 @@ public class EvaluationService {
 	 *
 	 */
 	static class AtbashCipher {
-
+		
+		Map<Character, Character> decoder = new HashMap<>();
+		
+		
 		/**
 		 * Question 11
 		 * 
@@ -340,8 +541,41 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			Map<Character, Character> encoder = new HashMap<>();
+			String encoded = "";
+			int pos = 97;
+			int spacer = 0;
+			for(char x = 'z'; x >= 'a'; x--) {
+				char c = (char) pos;
+				encoder.put(c, x);
+				pos++;
+			}
+			
+			string = string.toLowerCase().replaceAll("\\s", "");
+			char[] toEncode = string.toCharArray();
+			
+			
+			for(int x = 0; x < toEncode.length; x++) {
+				
+				if(Character.isAlphabetic(toEncode[x]))
+					encoded += encoder.get(toEncode[x]);
+				else if(Character.isDigit(toEncode[x])){
+					encoded += toEncode[x];
+				} else {
+					continue;
+				}
+				
+				spacer++;
+				if(spacer == 5) {
+					spacer = 0;
+					encoded += " ";
+				}
+				
+			}
+			
+			
+			
+			return encoded.trim();
 		}
 
 		/**
@@ -351,8 +585,33 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			Map<Character, Character> decoder = new HashMap<>();
+			String decoded = "";
+			int pos = 122;
+			//int spacer = 0;
+			for(char x = 'a'; x <= 'z'; x++) {
+				char c = (char) pos;
+				decoder.put(c, x);
+				pos--;
+			}
+			
+			string = string.toLowerCase().replaceAll("\\s", "");
+			char[] toDecode = string.toCharArray();
+			
+			for(int x = 0; x < toDecode.length; x++) {
+				
+				if(Character.isAlphabetic(toDecode[x]))
+					decoded += decoder.get(toDecode[x]);
+				else if(Character.isDigit(toDecode[x])){
+					decoded += toDecode[x];
+				} else {
+					continue;
+				}
+				
+			}
+			
+			
+			return decoded;
 		}
 	}
 
